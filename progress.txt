@@ -1,0 +1,123 @@
+PROJECT PROGRESS – SELF-HOSTED WEB BUILDER
+========================================
+
+Legend:
+[ ] Not started
+[~] In progress
+[x] Completed
+
+--------------------------------------------------
+PHASE 0 – MACHINE PREPARATION
+--------------------------------------------------
+[ ] Install Ubuntu Server 24.04
+[ ] Create non-root user
+[ ] Configure SSH keys
+[ ] Enable UFW (22, 80, 443)
+[ ] Install Docker
+[ ] Install Docker Compose plugin
+[ ] Verify docker works without sudo
+
+--------------------------------------------------
+PHASE 1 – BASE INFRASTRUCTURE
+--------------------------------------------------
+[ ] Create project repository
+[ ] Define folder structure:
+    - infra/
+    - strapi/
+    - frontend/
+    - ai-agent/
+    - nginx/
+[ ] Create docker-compose.yml
+[ ] Add PostgreSQL service
+[ ] Add volumes for persistence
+
+--------------------------------------------------
+PHASE 2 – STRAPI SETUP
+--------------------------------------------------
+[ ] Create Strapi project (v5)
+[ ] Configure PostgreSQL connection
+[ ] Expose Strapi API internally
+[ ] Create admin account
+[ ] Disable public permissions by default
+[ ] Define initial content types:
+    - Page
+    - Section
+    - Component
+[ ] Verify CRUD via REST API
+
+--------------------------------------------------
+PHASE 3 – FRONTEND BUILDER
+--------------------------------------------------
+[ ] Create frontend project (Next.js or Vite)
+[ ] Configure environment variables
+[ ] Create API client for Strapi
+[ ] Implement Page renderer
+[ ] Implement Section renderer
+[ ] Implement Component registry
+[ ] Render homepage from Strapi data
+[ ] Hot reload on content change
+
+--------------------------------------------------
+PHASE 4 – NGINX & ROUTING
+--------------------------------------------------
+[ ] Add Nginx container
+[ ] Reverse proxy frontend
+[ ] Reverse proxy Strapi
+[ ] Configure subpaths or subdomains
+[ ] Enable gzip
+[ ] Prepare TLS (self-signed initially)
+
+--------------------------------------------------
+PHASE 5 – LOCAL LLM RUNTIME
+--------------------------------------------------
+[ ] Choose runtime (Ollama or vLLM)
+[ ] Install runtime
+[ ] Pull Qwen3-coder-next model
+[ ] Verify prompt + response
+[ ] Expose local API endpoint
+
+--------------------------------------------------
+PHASE 6 – AI AGENT CORE
+--------------------------------------------------
+[ ] Create ai-agent service
+[ ] Implement tool interface
+[ ] Implement planner → executor flow
+[ ] Add Strapi API tools
+[ ] Add filesystem tools (scoped)
+[ ] Add dry-run mode
+[ ] Add execution logs
+
+--------------------------------------------------
+PHASE 7 – AI → WEB BUILDER INTEGRATION
+--------------------------------------------------
+[ ] Natural language → structured plan
+[ ] Validate plan against schema
+[ ] Execute content changes
+[ ] Execute layout changes
+[ ] Verify frontend updates
+[ ] Rollback mechanism
+
+--------------------------------------------------
+PHASE 8 – HARDENING
+--------------------------------------------------
+[ ] Container isolation
+[ ] Read-only FS for agent
+[ ] API token scopes
+[ ] Rate limiting
+[ ] Audit logs
+
+--------------------------------------------------
+PHASE 9 – POLISH
+--------------------------------------------------
+[ ] Example prompts
+[ ] Documentation
+[ ] Backup strategy
+[ ] Update workflow
+
+--------------------------------------------------
+CURRENT STATUS:
+- Project defined
+- Architecture approved
+- Ready to start Phase 0
+
+git config --global user.name "Kirin930"
