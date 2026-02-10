@@ -1,0 +1,97 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: webstudio-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks: [webstudio_net]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  strapi:
+    image: node:20-alpine
+    container_name: webstudio-strapi
+    working_dir: /app
+    command: sh -lc "npm ci && npm run build && npm run develop"
+    ports:
+      - "1337:1337"
+      - "5173:5173"
+    environment:
+      NODE_ENV: development
+
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${POSTGRES_DB}
+      DATABASE_USERNAME: ${POSTGRES_USER}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+
+      APP_KEYS: ${STRAPI_APP_KEYS}
+      API_TOKEN_SALT: ${STRAPI_API_TOKEN_SALT}
+      ADMIN_JWT_SECRET: ${STRAPI_ADMIN_JWT_SECRET}
+      JWT_SECRET: ${STRAPI_JWT_SECRET}
+
+      HOST: 0.0.0.0
+      PORT: 1337
+    volumes:
+      - ../strapi:/app
+      - strapi_node_modules:/app/node_modules
+      - strapi_uploads:/app/public/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: [webstudio_net]
+    restart: unless-stopped
+
+  frontend:
+    image: node:20-alpine
+    container_name: webstudio-frontend
+    working_dir: /app
+    # Works for Next.js or Vite; just ensure package.json scripts exist.
+    command: sh -lc "npm install && npm run dev -- -p 3500"
+    ports:
+      - "3500:3500"
+    environment:
+      NODE_ENV: development
+      # Your frontend will call Strapi via Nginx in-browser,
+      # but from inside container you can also call http://strapi:1337
+      # STRAPI_INTERNAL_URL: http://strapi:1337
+      # STRAPI_PUBLIC_URL: /api
+      STRAPI_URL: http://strapi:1337
+      STRAPI_TOKEN: ${STRAPI_TOKEN}
+    volumes:
+      - ../frontend:/app
+    depends_on:
+      - strapi
+    networks:
+      - webstudio_net
+    restart: unless-stopped
+
+  #nginx:
+  #  image: nginx:1.27-alpine
+  #  container_name: webstudio-nginx
+  #  ports:
+  #    - "80:80"
+  #  volumes:
+  #    - ../nginx/conf.d:/etc/nginx/conf.d:ro
+  #  depends_on:
+  #    - strapi
+  #  networks: [webstudio_net]
+  #  restart: unless-stopped
+
+volumes:
+  pg_data:
+  strapi_uploads:
+  strapi_node_modules:
+
+networks:
+  webstudio_net:
+    driver: bridge

@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_shared_blocks",
+  "info": {
+    "displayName": "Block"
+  },
+  "options": {},
+  "attributes": {
+    "Text": {
+      "type": "blocks"
+    }
+  },
+  "config": {}
+}
