@@ -1,5 +1,6 @@
 // frontend/components/blocks/registry.tsx
 import type { Block } from "@/lib/strapi";
+import { BlocksBlock } from "./BlocksBlock";
 import { RichTextBlock } from "./RichTextBlock";
 import { HeroBlock } from "./HeroBlock";
 import { JSX } from "react";
@@ -11,6 +12,9 @@ const registry: Record<string, BlockComponent> = {
   richText: RichTextBlock,
   "shared.rich-text": RichTextBlock,
   "shared.richText": RichTextBlock,
+
+  block: BlocksBlock,
+  "shared.block": BlocksBlock,
   
   hero: HeroBlock,
   "shared.hero": HeroBlock,

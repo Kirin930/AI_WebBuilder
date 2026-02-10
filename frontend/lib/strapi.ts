@@ -47,10 +47,22 @@ function mapPage(entity: any): Page {
     const blocksRaw = sa?.blocks?.data ?? sa?.blocks ?? [];
     const blocks: Block[] = blocksRaw.map((b: any) => {
       const ba = b?.attributes ?? b;
+      const rawType = ba.__component ?? ba.type;
+      const type = normalizeType(rawType);
+      let props = ba.props ?? ba;
+
+      if (type === "richText" && props?.body && !props?.text) {
+        props = { ...props, text: props.body };
+      }
+
+      if (type === "block" && props?.Text && !props?.content) {
+        props = { ...props, content: props.Text };
+      }
+
       return {
         id: b.id ?? ba.id,
-        type: ba.__component ?? "unknown",
-        props: ba.props ?? ba,
+        type: type || "unknown",
+        props,
       };
     });
 

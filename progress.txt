@@ -9,47 +9,55 @@ Legend:
 --------------------------------------------------
 PHASE 0 – MACHINE PREPARATION
 --------------------------------------------------
-[ ] Install Ubuntu Server 24.04
-[ ] Create non-root user
-[ ] Configure SSH keys
-[ ] Enable UFW (22, 80, 443)
-[ ] Install Docker
-[ ] Install Docker Compose plugin
-[ ] Verify docker works without sudo
+[x] Install Ubuntu Server 24.04
+[x] Create non-root user
+[x] Configure SSH keys
+[x] Enable UFW (22, 80, 443)
+[x] Install Docker
+[x] Install Docker Compose plugin
+[x] Verify docker works without sudo
 
 --------------------------------------------------
 PHASE 1 – BASE INFRASTRUCTURE
 --------------------------------------------------
-[ ] Create project repository
-[ ] Define folder structure:
+[x] Create project repository
+[x] Define folder structure:
     - infra/
     - strapi/
     - frontend/
     - ai-agent/
     - nginx/
-[ ] Create docker-compose.yml
-[ ] Add PostgreSQL service
-[ ] Add volumes for persistence
+[x] Create docker-compose.yml
+[x] Add PostgreSQL service
+[x] Add volumes for persistence
+[x] Add Nginx reverse proxy
+[x] Verify container networking
+[x] Verify service startup order
 
 --------------------------------------------------
 PHASE 2 – STRAPI SETUP
 --------------------------------------------------
-[ ] Create Strapi project (v5)
-[ ] Configure PostgreSQL connection
-[ ] Expose Strapi API internally
-[ ] Create admin account
-[ ] Disable public permissions by default
-[ ] Define initial content types:
-    - Page
-    - Section
-    - Component
-[ ] Verify CRUD via REST API
+[x] Create Strapi project (v5)
+[x] Configure PostgreSQL connection
+[x] Fix SSL / migration issues
+[x] Expose Strapi API internally
+[x] Verify Strapi boots correctly
+[x] Create admin account
+[x] Disable public permissions by default
+[x] Define initial content types:
+    - Page (title, slug, sections)
+    - Section (name, order, blocks)
+    - Component: shared.block (type, props)
+[x] Create API token (read-only) for Content API access
+[x] Verify CRUD via REST API (curl + populate works)
 
 --------------------------------------------------
 PHASE 3 – FRONTEND BUILDER
 --------------------------------------------------
-[ ] Create frontend project (Next.js or Vite)
-[ ] Configure environment variables
+[x] Create frontend project (Next.js)
+[x] Configure environment variables
+[x] Run frontend via Docker
+[x] Reverse proxy frontend via Nginx
 [ ] Create API client for Strapi
 [ ] Implement Page renderer
 [ ] Implement Section renderer
@@ -60,9 +68,9 @@ PHASE 3 – FRONTEND BUILDER
 --------------------------------------------------
 PHASE 4 – NGINX & ROUTING
 --------------------------------------------------
-[ ] Add Nginx container
-[ ] Reverse proxy frontend
-[ ] Reverse proxy Strapi
+[x] Add Nginx container
+[x] Reverse proxy frontend
+[x] Reverse proxy Strapi
 [ ] Configure subpaths or subdomains
 [ ] Enable gzip
 [ ] Prepare TLS (self-signed initially)
@@ -116,8 +124,7 @@ PHASE 9 – POLISH
 
 --------------------------------------------------
 CURRENT STATUS:
-- Project defined
-- Architecture approved
-- Ready to start Phase 0
-
-git config --global user.name "Kirin930"
+- v0 Infrastructure: COMPLETED
+- v1 Web Builder: IN PROGRESS
+- Strapi: READY (admin + schema + read-only token + REST populate verified)
+- Next focus: Frontend → Strapi API client + Page/Section/Block renderer
